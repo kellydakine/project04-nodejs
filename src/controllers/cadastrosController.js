@@ -1,7 +1,6 @@
 import cadastros from "../models/Cadastro.js";
 
 class CadastroController {
-
     static listarCadastros = (req, res) => {
         cadastros.find((err, cadastros) => {
             res.status(200).json(cadastros);
@@ -16,7 +15,7 @@ class CadastroController {
             } else {
                 res.status(200).send(cadastros);
             }
-        })
+        }).select("-password")
     }
 
     static criarCadastro = (req, res) => {
