@@ -37,9 +37,9 @@ class CadastroController {
         const id = req.params.id;
         cadastros.findByIdAndUpdate(id, {$set: req.body}, (err) => {
             if(!err) {
-                res.status(200).send({message: "O cadastro foi realizado com sucesso!"})
+                res.status(200).send({message: "O cadastro foi realizado com sucesso!"});
             } else {
-                res.status(500).send({message: err.message})
+                res.status(500).send({message: err.message});
             }
         })
     }
@@ -48,9 +48,9 @@ class CadastroController {
         const id = req.params.id;
         cadastros.findByIdAndDelete(id, (err) => {
             if(!err) {
-                res.status(200).send({message: "Usuário removido com sucesso!"})
+                res.status(200).send({message: "Usuário removido com sucesso!"});
             } else {
-                res.status(404).send({message: "Usuário não encontrado!"})
+                res.status(404).send({message: "Usuário não encontrado!"});
             }
         })
     }
