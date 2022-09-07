@@ -4,6 +4,9 @@ function validaCpf(cpf) {
     return cpf.length === 11;
 }
 
+function validaSenha(senha) {
+    return senha.length >= 6;
+}
 
 const usuarioSchema = new mongoose.Schema(
     {
