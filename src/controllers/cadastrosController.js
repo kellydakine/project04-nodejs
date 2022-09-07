@@ -3,8 +3,12 @@ import cadastros from "../models/Cadastro.js";
 class CadastroController {
     static listarCadastros = (req, res) => {
         cadastros.find((err, cadastros) => {
-            res.status(200).json(cadastros);
-        })
+            const {page = 1, limit = 3} = req.query
+            const startIndex = (page - 1) * limit;
+            const endIndex = page * limit;
+            const resultUsers = cadastros.slice(startIndex, endIndex);
+            res.json(resultUsers);
+        }).select("-password");
     }
 
     static listarCadastrosId = (req, res) => {
@@ -15,7 +19,7 @@ class CadastroController {
             } else {
                 res.status(200).send(cadastros);
             }
-        }).select("-password")
+        }).select("-password");
     }
 
     static criarCadastro = (req, res) => {
