@@ -8,6 +8,31 @@ function validaSenha(senha) {
     return senha.length >= 6;
 }
 
+function validaAniversario(birthDate) {
+    const [day, month, year] = birthDate.split("/");
+    const date = new Date();
+
+    if (date.getFullYear() - Number(year) > 18) {
+    return true;
+    } else if (date.getFullYear() - Number(year) === 18) {
+    if (Number(month) < date.getMonth()) {
+        return true;
+    } else if (Number(month) === date.getMonth() + 1) {
+        if (Number(day) < date.getDate()) {
+        return true;
+        } else if(Number(day) === date.getDate()){
+        return true;
+        } else {
+        return false;
+        }
+    } else {
+        return false;
+    }
+    } else {
+        return false;
+    }
+}
+
 const usuarioSchema = new mongoose.Schema(
     {
         id: {type: String},
