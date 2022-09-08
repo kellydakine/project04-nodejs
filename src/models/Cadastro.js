@@ -8,29 +8,15 @@ function validaSenha(senha) {
     return senha.length >= 6;
 }
 
-function validaAniversario(birthDate) {
-    const [day, month, year] = birthDate.split("/");
-    const date = new Date();
-
-    if (date.getFullYear() - Number(year) > 18) {
-    return true;
-    } else if (date.getFullYear() - Number(year) === 18) {
-    if (Number(month) < date.getMonth()) {
-        return true;
-    } else if (Number(month) === date.getMonth() + 1) {
-        if (Number(day) < date.getDate()) {
-        return true;
-        } else if(Number(day) === date.getDate()){
-        return true;
-        } else {
-        return false;
-        }
-    } else {
-        return false;
+function validaAniversario(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
     }
-    } else {
-        return false;
-    }
+    return age >= 18;
 }
 
 const usuarioSchema = new mongoose.Schema(
@@ -39,7 +25,7 @@ const usuarioSchema = new mongoose.Schema(
         name: {type: String, required: true},
         cpf: {type: String, validate: [validaCpf, "Precisa de um cpf válido!"], required: true},
         birthDate: {type: String, validate: [validaAniversario, "Usuário precisa ter mais de 18 anos!"] , required: true},
-        email: {type:String, validate: [/[^@\t\r\n]+@[^@\t\r\n]+\.[^@\t\r\n]+/, "Email inválido!"], required:true},
+        email: {type: String, validate: [/[^@\t\r\n]+@[^@\t\r\n]+\.[^@\t\r\n]+/, "Email inválido!"], required:true},
         password: {type: String, validate: [validaSenha, "Esse campo precisa de no mínimo 6 caracteres!"], required: true},
         address: {type: String, required: true},
         number: {type: String, required: true},
