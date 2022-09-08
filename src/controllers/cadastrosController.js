@@ -11,6 +11,18 @@ class CadastroController {
         }).select("-password");
     }
 
+    static findUserByName = (req, res) => {
+        const name = req.query.name;
+
+        cadastros.find({'name': {$regex: name}}, {}, (err, cadastros) => {
+            if(err) {
+                res.status(404).send({message: `${err.message} - Usuário não encontrado.`});
+            } else {
+                res.status(200).send(cadastros);
+            }
+        }).select("-password");
+    }
+
     static listarCadastrosId = (req, res) => {
         const id = req.params.id;
         cadastros.findById(id, (err, cadastros) => {
