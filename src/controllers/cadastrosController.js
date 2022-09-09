@@ -24,7 +24,7 @@ class CadastroController {
         const id = req.params.id;
         cadastros.findById(id, (err, cadastros) => {
             err 
-                ? res.status(404).send({message: `ID do usuário não localizada!` })
+                ? res.status(404).send({message: `${err.message} - ID do usuário não localizada!` })
                 : res.status(200).send(cadastros);
         }).select("-password");
     }
@@ -33,7 +33,7 @@ class CadastroController {
         let newCadastro = new cadastros(req.body);
         newCadastro.save((err) => {
             err 
-                ? res.status(500).send({message: `Erro ao cadastrar novo usuário`})
+                ? res.status(500).send({message: `${err.message} - Erro ao cadastrar novo usuário`})
                 : res.status(201).send(newCadastro.toJSON());
         });
     }
@@ -42,7 +42,7 @@ class CadastroController {
         const id = req.params.id;
         cadastros.findByIdAndUpdate(id, {$set: req.body}, (err) => {
             !err 
-                ? res.status(200).send({message: "O cadastro foi realizado com sucesso!"})
+                ? res.status(200).send({message: "O cadastro foi alterado com sucesso!"})
                 : res.status(404).send({message: `Não foi possível localizar esse usuário!`});
         })
     }
